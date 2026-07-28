@@ -1,13 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-
-interface Todo {
-  id: number;
-  item: string;
-  completed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import type { Todo } from "@/types/customTypes";
 
 export const useTodoListStore = defineStore("todoList", () => {
   const todoList = ref<Todo[]>([]);

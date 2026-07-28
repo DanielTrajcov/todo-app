@@ -2,16 +2,9 @@
 import { ref } from "vue";
 import { useTodoListStore } from "@/stores/todoList";
 import { storeToRefs } from "pinia";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Pencil, Trash2 } from "lucide-vue-next";
+import TodoItem from "./TodoItem.vue";
+import TodoEmpty from "./TodoEmpty.vue";
+import TodoEditDialog from "./TodoEditDialog.vue";
 
 const store = useTodoListStore();
 const { todoList } = storeToRefs(store);
@@ -35,65 +28,23 @@ function confirmEdit() {
 
 <template>
   <div class="space-y-2">
-    <p
-      v-if="todoList.length === 0"
-      class="text-center text-muted-foreground text-sm py-8"
-    >
-      No todos yet. Add one above!
-    </p>
+    <TodoEmpty v-if="todoList.length === 0" />
 
-    <div
+    <TodoItem
       v-for="todo in todoList"
       :key="todo.id"
-      class="flex items-center gap-3 p-3 rounded-lg border bg-card"
-    >
-      <input
-        type="checkbox"
-        :id="`todo-${todo.id}`"
-        :checked="todo.completed"
-        class="h-4 w-4 cursor-pointer accent-primary"
-        @change="store.toggleCompleted(todo.id)"
-      />
-
-      <label
-        :for="`todo-${todo.id}`"
-        class="flex-1 cursor-pointer select-none"
-        :class="{ 'line-through text-muted-foreground': todo.completed }"
-      >
-        {{ todo.item }}
-      </label>
-
-      <Button size="icon" variant="ghost" @click="openEdit(todo.id, todo.item)">
-        <Pencil class="h-4 w-4" />
-      </Button>
-
-      <Button
-        size="icon"
-        variant="ghost"
-        class="text-destructive hover:text-destructive"
-        @click="store.deleteTodo(todo.id)"
-      >
-        <Trash2 class="h-4 w-4" />
-      </Button>
-    </div>
+      :todo="todo"
+      @toggle="store.toggleCompleted(todo.id)"
+      @edit="openEdit(todo.id, todo.item)"
+      @delete="store.deleteTodo(todo.id)"
+    />
   </div>
 
-  <Dialog v-model:open="dialogOpen">
-    <DialogContent class="sm:max-w-md">
-      <DialogHeader>
-        <DialogTitle>Edit Todo</DialogTitle>
-      </DialogHeader>
-
-      <Input
-        v-model="editingText"
-        placeholder="Update your task…"
-        @keyup.enter="confirmEdit"
-      />
-
-      <DialogFooter class="mt-2">
-        <Button variant="outline" @click="dialogOpen = false">Cancel</Button>
-        <Button @click="confirmEdit">Save</Button>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
+  <TodoEditDialog
+    :open="dialogOpen"
+    :text="editingText"
+    @close="dialogOpen = false"
+    @text-change="editingText = $event"
+    @confirm="confirmEdit"
+  />
 </template>

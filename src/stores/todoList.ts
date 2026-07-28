@@ -3,9 +3,17 @@ import { defineStore } from 'pinia';
 
 import type { Todo } from '@/types/customTypes';
 
+import dummyData from '@/data/dummydata.json';
+
 export const useTodoListStore = defineStore('todoList', () => {
-    const todoList = ref<Todo[]>([]);
-    const id = ref(0);
+    const todoList = ref<Todo[]>(
+        dummyData.map((todo) => ({
+            ...todo,
+            createdAt: new Date(todo.createdAt),
+            updatedAt: new Date(todo.updatedAt),
+        })),
+    );
+    const id = ref(dummyData.length + 1);
 
     const addTodo = (item: string) => {
         todoList.value.push({

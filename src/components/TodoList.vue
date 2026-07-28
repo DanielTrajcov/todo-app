@@ -8,14 +8,14 @@
             :todo="todo"
             @toggle="store.toggleCompleted(todo)"
             @edit="openEdit(todo)"
-            @delete="store.deleteTodo(todo.id)"
+            @delete="removeTodo(todo.id)"
         />
     </div>
 
     <TodoEditDialog
         :open="dialogOpen"
         :text="editingText"
-        @close="dialogOpen = false"
+        @close="closeEdit"
         @text-change="editingText = $event"
         @confirm="confirmEdit"
     />
@@ -46,9 +46,20 @@ const openEdit = (todo: Todo) => {
     dialogOpen.value = true;
 };
 
+const closeEdit = () => {
+    dialogOpen.value = false;
+    editingTodo.value = null;
+    editingText.value = '';
+};
+
 const confirmEdit = () => {
     if (!editingText.value.trim() || editingTodo.value === null) return;
     store.updateTodo(editingTodo.value, editingText.value.trim());
-    dialogOpen.value = false;
+    closeEdit();
+};
+
+const removeTodo = (targetId: number) => {
+    store.deleteTodo(targetId);
+    closeEdit();
 };
 </script>

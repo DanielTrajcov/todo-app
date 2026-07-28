@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { defineStore } from 'pinia';
+
 import type { Todo } from '@/types/customTypes';
 
 export const useTodoListStore = defineStore('todoList', () => {

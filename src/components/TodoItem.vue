@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import { Pencil, Trash2 } from 'lucide-vue-next';
+
 import type { Todo } from '@/types/customTypes';
+
+import { Button } from '@/components/ui/button';
 
 defineProps<{ todo: Todo }>();
 

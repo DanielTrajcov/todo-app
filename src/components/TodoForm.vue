@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+
 import { useTodoListStore } from '@/stores/todoList';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 

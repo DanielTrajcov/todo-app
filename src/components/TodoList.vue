@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useTodoListStore } from '@/stores/todoList';
 import { storeToRefs } from 'pinia';
+
+import { useTodoListStore } from '@/stores/todoList';
+
 import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
 import TodoEditDialog from './TodoEditDialog.vue';

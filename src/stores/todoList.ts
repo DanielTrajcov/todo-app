@@ -29,20 +29,14 @@ export const useTodoListStore = defineStore('todoList', () => {
         todoList.value = todoList.value.filter((task) => task.id !== targetId);
     };
 
-    const toggleCompleted = (targetId: number) => {
-        const task = todoList.value.find((task) => task.id === targetId);
-        if (task) {
-            task.completed = !task.completed;
-            task.updatedAt = new Date();
-        }
+    const toggleCompleted = (task: Todo) => {
+        task.completed = !task.completed;
+        task.updatedAt = new Date();
     };
 
-    const updateTodo = (targetId: number, newItem: string) => {
-        const task = todoList.value.find((task) => task.id === targetId);
-        if (task) {
-            task.item = newItem;
-            task.updatedAt = new Date();
-        }
+    const updateTodo = (task: Todo, newItem: string) => {
+        task.item = newItem;
+        task.updatedAt = new Date();
     };
 
     return { todoList, id, addTodo, deleteTodo, toggleCompleted, updateTodo };

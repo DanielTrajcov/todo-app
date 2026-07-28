@@ -6,8 +6,8 @@
             v-for="todo in todoList"
             :key="todo.id"
             :todo="todo"
-            @toggle="store.toggleCompleted(todo.id)"
-            @edit="openEdit(todo.id, todo.item)"
+            @toggle="store.toggleCompleted(todo)"
+            @edit="openEdit(todo)"
             @delete="store.deleteTodo(todo.id)"
         />
     </div>
@@ -25,6 +25,8 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import type { Todo } from '@/types/customTypes';
+
 import { useTodoListStore } from '@/stores/todoList';
 
 import TodoItem from './TodoItem.vue';
@@ -35,18 +37,18 @@ const store = useTodoListStore();
 const { todoList } = storeToRefs(store);
 
 const dialogOpen = ref(false);
-const editingId = ref<number | null>(null);
+const editingTodo = ref<Todo | null>(null);
 const editingText = ref('');
 
-const openEdit = (id: number, currentItem: string) => {
-    editingId.value = id;
-    editingText.value = currentItem;
+const openEdit = (todo: Todo) => {
+    editingTodo.value = todo;
+    editingText.value = todo.item;
     dialogOpen.value = true;
 };
 
 const confirmEdit = () => {
-    if (!editingText.value.trim() || editingId.value === null) return;
-    store.updateTodo(editingId.value, editingText.value.trim());
+    if (!editingText.value.trim() || editingTodo.value === null) return;
+    store.updateTodo(editingTodo.value, editingText.value.trim());
     dialogOpen.value = false;
 };
 </script>

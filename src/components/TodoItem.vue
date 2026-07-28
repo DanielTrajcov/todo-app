@@ -1,19 +1,3 @@
-<script setup lang="ts">
-import { Pencil, Trash2 } from 'lucide-vue-next';
-
-import type { Todo } from '@/types/customTypes';
-
-import { Button } from '@/components/ui/button';
-
-defineProps<{ todo: Todo }>();
-
-defineEmits<{
-    toggle: [void];
-    edit: [void];
-    delete: [void];
-}>();
-</script>
-
 <template>
     <div class="flex items-center gap-3 p-3 rounded-lg border bg-card">
         <input
@@ -46,3 +30,19 @@ defineEmits<{
         </Button>
     </div>
 </template>
+
+<script setup lang="ts">
+import { Pencil, Trash2 } from 'lucide-vue-next';
+
+import type { Todo } from '@/types/customTypes';
+
+import { Button } from '@/components/ui/button';
+
+defineProps<{ todo: Todo }>();
+
+defineEmits<{
+    toggle: [void];
+    edit: [void];
+    delete: [void];
+}>();
+</script>

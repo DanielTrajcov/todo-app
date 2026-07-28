@@ -1,3 +1,10 @@
+<template>
+    <form class="flex gap-2" @submit.prevent="addItemAndClear(todo)">
+        <Input v-model="todo" placeholder="Add a new task…" />
+        <Button type="submit">Add</Button>
+    </form>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 
@@ -15,10 +22,3 @@ const addItemAndClear = (item: string) => {
     todo.value = '';
 };
 </script>
-
-<template>
-    <form class="flex gap-2" @submit.prevent="addItemAndClear(todo)">
-        <Input v-model="todo" placeholder="Add a new task…" />
-        <Button type="submit">Add</Button>
-    </form>
-</template>

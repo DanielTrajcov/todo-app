@@ -7,64 +7,25 @@
             :key="todo.id"
             :todo="todo"
             @toggle="store.toggleCompleted(todo)"
-            @edit="openEdit(todo)"
-            @delete="removeTodo(todo.id)"
+            @edit="store.showModal('edit', todo)"
+            @delete="store.showModal('delete', todo)"
         />
     </div>
 
-    <TodoEditDialog
-        :open="dialogOpen"
-        :text="editingText"
-        @close="closeEdit"
-        @text-change="editingText = $event"
-        @confirm="confirmEdit"
-    />
+    <TodoEditModal />
+    <TodoDeleteModal />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-
-import type { Todo } from '@/types/customTypes';
 
 import { useTodoListStore } from '@/stores/todoList';
 
 import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
-import TodoEditDialog from './TodoEditDialog.vue';
+import TodoEditModal from './TodoEditModal.vue';
+import TodoDeleteModal from './TodoDeleteModal.vue';
 
 const store = useTodoListStore();
 const { todoList } = storeToRefs(store);
-
-const dialogOpen = ref(false);
-const editingTodo = ref<Todo | null>(null);
-const editingText = ref('');
-
-const openEdit = (todo: Todo) => {
-    editingTodo.value = todo;
-    editingText.value = todo.item;
-    dialogOpen.value = true;
-};
-
-const closeEdit = () => {
-    dialogOpen.value = false;
-    editingTodo.value = null;
-    editingText.value = '';
-};
-
-const confirmEdit = () => {
-    if (editingTodo.value === null) return;
-
-    const newItem = editingText.value.trim();
-
-    if (newItem.length === 0) return;
-
-    store.updateTodo(editingTodo.value, newItem);
-    closeEdit();
-};
-
-const removeTodo = (targetId: number) => {
-    store.deleteTodo(targetId);
-    closeEdit();
-};
 </script>

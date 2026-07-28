@@ -6,4 +6,4 @@ export interface Todo {
     updatedAt: Date;
 }
 
-export type ModalMode = 'edit' | 'delete';
+export type ModalMode = 'preview' | 'edit' | 'delete';

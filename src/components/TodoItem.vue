@@ -16,6 +16,10 @@
             {{ todo.item }}
         </label>
 
+        <Button size="icon" variant="ghost" @click="$emit('preview')">
+            <Eye class="h-4 w-4" />
+        </Button>
+
         <Button size="icon" variant="ghost" @click="$emit('edit')">
             <Pencil class="h-4 w-4" />
         </Button>
@@ -32,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pencil, Trash2 } from 'lucide-vue-next';
+import { Eye, Pencil, Trash2 } from 'lucide-vue-next';
 
 import type { Todo } from '@/types/customTypes';
 
@@ -42,6 +46,7 @@ defineProps<{ todo: Todo }>();
 
 defineEmits<{
     toggle: [void];
+    preview: [void];
     edit: [void];
     delete: [void];
 }>();

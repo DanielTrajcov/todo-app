@@ -2,15 +2,24 @@
     <div class="space-y-2">
         <TodoEmpty v-if="todoList.length === 0" />
 
-        <TodoItem
-            v-for="todo in todoList"
-            :key="todo.id"
-            :todo="todo"
-            @toggle="store.toggleCompleted(todo)"
-            @preview="store.showModal('preview', todo)"
-            @edit="store.showModal('edit', todo)"
-            @delete="store.showModal('delete', todo)"
-        />
+        <p
+            v-else-if="filteredTodoList.length === 0"
+            class="text-center text-muted-foreground text-sm py-8"
+        >
+            No tasks match your search.
+        </p>
+
+        <template v-else>
+            <TodoItem
+                v-for="todo in filteredTodoList"
+                :key="todo.id"
+                :todo="todo"
+                @toggle="store.toggleCompleted(todo)"
+                @preview="store.showModal('preview', todo)"
+                @edit="store.showModal('edit', todo)"
+                @delete="store.showModal('delete', todo)"
+            />
+        </template>
     </div>
 
     <TodoPreviewModal />
@@ -30,5 +39,5 @@ import TodoEditModal from './TodoEditModal.vue';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 
 const store = useTodoListStore();
-const { todoList } = storeToRefs(store);
+const { todoList, filteredTodoList } = storeToRefs(store);
 </script>

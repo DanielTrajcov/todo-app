@@ -11,7 +11,9 @@
 
             <dl class="grid grid-cols-3 gap-y-3 text-sm">
                 <dt class="text-muted-foreground">Task</dt>
-                <dd class="col-span-2 wrap-break-word">{{ activeTodo?.item }}</dd>
+                <dd class="col-span-2 wrap-break-word">
+                    {{ activeTodo?.item }}
+                </dd>
 
                 <dt class="text-muted-foreground">Status</dt>
                 <dd class="col-span-2">

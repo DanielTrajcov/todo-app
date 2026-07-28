@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import type { ModalMode, Todo } from '@/types/customTypes';
@@ -14,6 +14,18 @@ export const useTodoListStore = defineStore('todoList', () => {
         })),
     );
     const id = ref(dummyData.length + 1);
+
+    const searchQuery = ref('');
+
+    const filteredTodoList = computed(() => {
+        const query = searchQuery.value.trim().toLowerCase();
+
+        if (query.length === 0) return todoList.value;
+
+        return todoList.value.filter((task) => {
+            return task.item.toLowerCase().includes(query);
+        });
+    });
 
     const isModalOpen = ref(false);
     const modalMode = ref<ModalMode | null>(null);
@@ -73,6 +85,8 @@ export const useTodoListStore = defineStore('todoList', () => {
     return {
         todoList,
         id,
+        searchQuery,
+        filteredTodoList,
         isModalOpen,
         modalMode,
         activeTodo,

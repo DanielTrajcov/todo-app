@@ -4,11 +4,13 @@
             To Do List
         </h1>
         <TodoForm />
+        <TodoSearch />
         <TodoList />
     </div>
 </template>
 
 <script setup lang="ts">
 import TodoForm from './TodoForm.vue';
+import TodoSearch from './TodoSearch.vue';
 import TodoList from './TodoList.vue';
 </script>

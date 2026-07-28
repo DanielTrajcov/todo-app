@@ -53,8 +53,13 @@ const closeEdit = () => {
 };
 
 const confirmEdit = () => {
-    if (!editingText.value.trim() || editingTodo.value === null) return;
-    store.updateTodo(editingTodo.value, editingText.value.trim());
+    if (editingTodo.value === null) return;
+
+    const newItem = editingText.value.trim();
+
+    if (newItem.length === 0) return;
+
+    store.updateTodo(editingTodo.value, newItem);
     closeEdit();
 };
 

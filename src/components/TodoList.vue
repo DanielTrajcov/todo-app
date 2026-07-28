@@ -15,17 +15,17 @@ const dialogOpen = ref(false);
 const editingId = ref<number | null>(null);
 const editingText = ref('');
 
-function openEdit(id: number, currentItem: string) {
+const openEdit = (id: number, currentItem: string) => {
     editingId.value = id;
     editingText.value = currentItem;
     dialogOpen.value = true;
-}
+};
 
-function confirmEdit() {
+const confirmEdit = () => {
     if (!editingText.value.trim() || editingId.value === null) return;
     store.updateTodo(editingId.value, editingText.value.trim());
     dialogOpen.value = false;
-}
+};
 </script>
 
 <template>

@@ -9,11 +9,11 @@ import { Button } from '@/components/ui/button';
 const todo = ref('');
 const store = useTodoListStore();
 
-function addItemAndClear(item: string) {
+const addItemAndClear = (item: string) => {
     if (item.trim().length === 0) return;
     store.addTodo(item.trim());
     todo.value = '';
-}
+};
 </script>
 
 <template>

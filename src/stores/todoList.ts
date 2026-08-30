@@ -9,11 +9,11 @@ export const useTodoListStore = defineStore('todoList', () => {
     const todoList = ref<Todo[]>(
         dummyData.map((todo) => ({
             ...todo,
+            id: String(todo.id),
             createdAt: new Date(todo.createdAt),
             updatedAt: new Date(todo.updatedAt),
         })),
     );
-    const id = ref(dummyData.length + 1);
 
     const searchQuery = ref('');
 
@@ -49,7 +49,7 @@ export const useTodoListStore = defineStore('todoList', () => {
     const addTodo = (item: string) => {
         todoList.value.push({
             item,
-            id: id.value++,
+            id: crypto.randomUUID(),
             completed: false,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -84,7 +84,6 @@ export const useTodoListStore = defineStore('todoList', () => {
 
     return {
         todoList,
-        id,
         searchQuery,
         filteredTodoList,
         isModalOpen,

@@ -1,7 +1,7 @@
 <template>
-    <TodoApp />
+    <RouterView />
 </template>
 
 <script setup lang="ts">
-import TodoApp from './components/TodoApp.vue';
+import { RouterView } from 'vue-router';
 </script>

@@ -15,14 +15,12 @@
                 :key="todo.id"
                 :todo="todo"
                 @toggle="store.toggleCompleted(todo)"
-                @preview="store.showModal('preview', todo)"
                 @edit="store.showModal('edit', todo)"
                 @delete="store.showModal('delete', todo)"
             />
         </template>
     </div>
 
-    <TodoPreviewModal />
     <TodoEditModal />
     <TodoDeleteModal />
 </template>
@@ -34,7 +32,6 @@ import { useTodoListStore } from '@/stores/todoList';
 
 import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
-import TodoPreviewModal from './TodoPreviewModal.vue';
 import TodoEditModal from './TodoEditModal.vue';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 

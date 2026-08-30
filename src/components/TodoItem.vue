@@ -16,8 +16,10 @@
             {{ todo.item }}
         </label>
 
-        <Button size="icon" variant="ghost" @click="$emit('preview')">
-            <Eye class="h-4 w-4" />
+        <Button as-child size="icon" variant="ghost">
+            <RouterLink :to="`/todo/${todo.id}`">
+                <Eye class="h-4 w-4" />
+            </RouterLink>
         </Button>
 
         <Button size="icon" variant="ghost" @click="$emit('edit')">
@@ -36,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
 import { Eye, Pencil, Trash2 } from 'lucide-vue-next';
 
 import type { Todo } from '@/types/customTypes';
@@ -46,7 +49,6 @@ defineProps<{ todo: Todo }>();
 
 defineEmits<{
     toggle: [void];
-    preview: [void];
     edit: [void];
     delete: [void];
 }>();

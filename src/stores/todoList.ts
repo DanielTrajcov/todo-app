@@ -20,7 +20,9 @@ export const useTodoListStore = defineStore('todoList', () => {
     const filteredTodoList = computed(() => {
         const query = searchQuery.value.trim().toLowerCase();
 
-        if (query.length === 0) return todoList.value;
+        if (query.length === 0) {
+            return todoList.value;
+        }
 
         return todoList.value.filter((task) => {
             return task.item.toLowerCase().includes(query);
@@ -62,11 +64,15 @@ export const useTodoListStore = defineStore('todoList', () => {
     };
 
     const updateTodo = () => {
-        if (activeTodo.value === null) return;
+        if (activeTodo.value === null) {
+            return;
+        }
 
         const newItem = editingText.value.trim();
 
-        if (newItem.length === 0) return;
+        if (newItem.length === 0) {
+            return;
+        }
 
         activeTodo.value.item = newItem;
         activeTodo.value.updatedAt = new Date();
@@ -74,7 +80,9 @@ export const useTodoListStore = defineStore('todoList', () => {
     };
 
     const deleteTodo = () => {
-        if (activeTodo.value === null) return;
+        if (activeTodo.value === null) {
+            return;
+        }
 
         const targetId = activeTodo.value.id;
 

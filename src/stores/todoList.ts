@@ -29,6 +29,10 @@ export const useTodoListStore = defineStore('todoList', () => {
         });
     });
 
+    const getTodoById = (id: string) => {
+        return todoList.value.find((task) => task.id === id);
+    };
+
     const isModalOpen = ref(false);
     const modalMode = ref<ModalMode | null>(null);
     const activeTodo = ref<Todo | null>(null);
@@ -79,21 +83,15 @@ export const useTodoListStore = defineStore('todoList', () => {
         closeModal();
     };
 
-    const deleteTodo = () => {
-        if (activeTodo.value === null) {
-            return;
-        }
-
-        const targetId = activeTodo.value.id;
-
-        todoList.value = todoList.value.filter((task) => task.id !== targetId);
-        closeModal();
+    const deleteTodo = (id: string) => {
+        todoList.value = todoList.value.filter((task) => task.id !== id);
     };
 
     return {
         todoList,
         searchQuery,
         filteredTodoList,
+        getTodoById,
         isModalOpen,
         modalMode,
         activeTodo,

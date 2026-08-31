@@ -25,21 +25,12 @@
         <Button size="icon" variant="ghost" @click="$emit('edit')">
             <Pencil class="h-4 w-4" />
         </Button>
-
-        <Button
-            size="icon"
-            variant="ghost"
-            class="text-destructive hover:text-destructive"
-            @click="$emit('delete')"
-        >
-            <Trash2 class="h-4 w-4" />
-        </Button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import { Eye, Pencil, Trash2 } from 'lucide-vue-next';
+import { Eye, Pencil } from 'lucide-vue-next';
 
 import type { Todo } from '@/types/customTypes';
 
@@ -50,6 +41,5 @@ defineProps<{ todo: Todo }>();
 defineEmits<{
     toggle: [void];
     edit: [void];
-    delete: [void];
 }>();
 </script>

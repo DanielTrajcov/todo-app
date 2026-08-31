@@ -1,20 +1,20 @@
 <template>
-    <Dialog :open="isOpen" @update:open="!$event && store.closeModal()">
+    <Dialog :open="open" @update:open="!$event && $emit('close')">
         <DialogContent class="sm:max-w-md">
             <DialogHeader>
                 <DialogTitle>Delete todo</DialogTitle>
 
                 <DialogDescription>
-                    “{{ activeTodo?.item }}” will be permanently removed.
+                    “{{ item }}” will be permanently removed.
                 </DialogDescription>
             </DialogHeader>
 
             <DialogFooter class="mt-2">
-                <Button variant="outline" @click="store.closeModal()">
+                <Button variant="outline" @click="$emit('close')">
                     Cancel
                 </Button>
 
-                <Button variant="destructive" @click="store.deleteTodo()">
+                <Button variant="destructive" @click="$emit('confirm')">
                     Delete
                 </Button>
             </DialogFooter>
@@ -23,11 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
-
-import { useTodoListStore } from '@/stores/todoList';
-
 import {
     Dialog,
     DialogContent,
@@ -38,10 +33,13 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-const store = useTodoListStore();
-const { isModalOpen, modalMode, activeTodo } = storeToRefs(store);
+defineProps<{
+    open: boolean;
+    item: string;
+}>();
 
-const isOpen = computed(() => {
-    return isModalOpen.value && modalMode.value === 'delete';
-});
+defineEmits<{
+    close: [void];
+    confirm: [void];
+}>();
 </script>

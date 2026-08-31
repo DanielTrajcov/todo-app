@@ -16,13 +16,11 @@
                 :todo="todo"
                 @toggle="store.toggleCompleted(todo)"
                 @edit="store.showModal('edit', todo)"
-                @delete="store.showModal('delete', todo)"
             />
         </template>
     </div>
 
     <TodoEditModal />
-    <TodoDeleteModal />
 </template>
 
 <script setup lang="ts">
@@ -33,7 +31,6 @@ import { useTodoListStore } from '@/stores/todoList';
 import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
 import TodoEditModal from './TodoEditModal.vue';
-import TodoDeleteModal from './TodoDeleteModal.vue';
 
 const store = useTodoListStore();
 const { todoList, filteredTodoList } = storeToRefs(store);

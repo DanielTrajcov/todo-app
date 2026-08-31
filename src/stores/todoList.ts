@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { ModalMode, Todo } from '@/types/customTypes';
+import type { Todo } from '@/types/customTypes';
 
 import dummyData from '@/data/dummydata.json';
 
@@ -33,25 +33,6 @@ export const useTodoListStore = defineStore('todoList', () => {
         return todoList.value.find((task) => task.id === id);
     };
 
-    const isModalOpen = ref(false);
-    const modalMode = ref<ModalMode | null>(null);
-    const activeTodo = ref<Todo | null>(null);
-    const editingText = ref('');
-
-    const showModal = (mode: ModalMode, todo: Todo) => {
-        modalMode.value = mode;
-        activeTodo.value = todo;
-        editingText.value = todo.item;
-        isModalOpen.value = true;
-    };
-
-    const closeModal = () => {
-        isModalOpen.value = false;
-        modalMode.value = null;
-        activeTodo.value = null;
-        editingText.value = '';
-    };
-
     const addTodo = (item: string) => {
         todoList.value.push({
             item,
@@ -67,20 +48,15 @@ export const useTodoListStore = defineStore('todoList', () => {
         task.updatedAt = new Date();
     };
 
-    const updateTodo = () => {
-        if (activeTodo.value === null) {
+    const updateTodo = (id: string, item: string) => {
+        const task = getTodoById(id);
+
+        if (task === undefined) {
             return;
         }
 
-        const newItem = editingText.value.trim();
-
-        if (newItem.length === 0) {
-            return;
-        }
-
-        activeTodo.value.item = newItem;
-        activeTodo.value.updatedAt = new Date();
-        closeModal();
+        task.item = item;
+        task.updatedAt = new Date();
     };
 
     const deleteTodo = (id: string) => {
@@ -92,12 +68,6 @@ export const useTodoListStore = defineStore('todoList', () => {
         searchQuery,
         filteredTodoList,
         getTodoById,
-        isModalOpen,
-        modalMode,
-        activeTodo,
-        editingText,
-        showModal,
-        closeModal,
         addTodo,
         toggleCompleted,
         updateTodo,

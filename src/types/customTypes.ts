@@ -5,5 +5,3 @@ export interface Todo {
     createdAt: Date;
     updatedAt: Date;
 }
-
-export type ModalMode = 'edit';

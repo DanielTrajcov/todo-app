@@ -15,12 +15,9 @@
                 :key="todo.id"
                 :todo="todo"
                 @toggle="store.toggleCompleted(todo)"
-                @edit="store.showModal('edit', todo)"
             />
         </template>
     </div>
-
-    <TodoEditModal />
 </template>
 
 <script setup lang="ts">
@@ -30,7 +27,6 @@ import { useTodoListStore } from '@/stores/todoList';
 
 import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
-import TodoEditModal from './TodoEditModal.vue';
 
 const store = useTodoListStore();
 const { todoList, filteredTodoList } = storeToRefs(store);

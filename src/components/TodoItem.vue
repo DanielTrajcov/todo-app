@@ -21,16 +21,12 @@
                 <Eye class="h-4 w-4" />
             </RouterLink>
         </Button>
-
-        <Button size="icon" variant="ghost" @click="$emit('edit')">
-            <Pencil class="h-4 w-4" />
-        </Button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import { Eye, Pencil } from 'lucide-vue-next';
+import { Eye } from 'lucide-vue-next';
 
 import type { Todo } from '@/types/customTypes';
 
@@ -38,8 +34,5 @@ import { Button } from '@/components/ui/button';
 
 defineProps<{ todo: Todo }>();
 
-defineEmits<{
-    toggle: [void];
-    edit: [void];
-}>();
+defineEmits<{ toggle: [void] }>();
 </script>

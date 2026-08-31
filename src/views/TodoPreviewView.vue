@@ -33,6 +33,10 @@
                     <RouterLink to="/">Back</RouterLink>
                 </Button>
 
+                <Button as-child>
+                    <RouterLink :to="`/todo/${todo.id}/edit`">Edit</RouterLink>
+                </Button>
+
                 <Button variant="destructive" @click="isDeleteOpen = true">
                     Delete
                 </Button>

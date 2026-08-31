@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import TodoApp from '@/components/TodoApp.vue';
 import TodoPreviewView from '@/views/TodoPreviewView.vue';
+import TodoEditView from '@/views/TodoEditView.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -13,6 +14,10 @@ const router = createRouter({
         {
             path: '/todo/:id',
             component: TodoPreviewView,
+        },
+        {
+            path: '/todo/:id/edit',
+            component: TodoEditView,
         },
     ],
 });

@@ -1,6 +1,13 @@
 <template>
     <div class="space-y-2">
-        <TodoEmpty v-if="todoList.length === 0" />
+        <p
+            v-if="isLoading"
+            class="text-center text-muted-foreground text-sm py-8"
+        >
+            Loading…
+        </p>
+
+        <TodoEmpty v-else-if="todoList.length === 0" />
 
         <p
             v-else-if="filteredTodoList.length === 0"
@@ -29,5 +36,5 @@ import TodoItem from './TodoItem.vue';
 import TodoEmpty from './TodoEmpty.vue';
 
 const store = useTodoListStore();
-const { todoList, filteredTodoList } = storeToRefs(store);
+const { todoList, filteredTodoList, isLoading } = storeToRefs(store);
 </script>

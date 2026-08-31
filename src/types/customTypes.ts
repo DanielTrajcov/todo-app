@@ -5,3 +5,9 @@ export interface Todo {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface ApiTodo {
+    id: number;
+    title: string;
+    completed: boolean;
+}

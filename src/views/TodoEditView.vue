@@ -3,7 +3,14 @@
         <h1 class="text-3xl font-bold tracking-tight text-center">Edit todo</h1>
 
         <p
-            v-if="todo === undefined"
+            v-if="store.isLoading"
+            class="text-center text-muted-foreground text-sm py-8"
+        >
+            Loading…
+        </p>
+
+        <p
+            v-else-if="todo === undefined"
             class="text-center text-muted-foreground text-sm py-8"
         >
             Task not found.
@@ -28,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 
 import { useTodoListStore } from '@/stores/todoList';
@@ -44,7 +51,17 @@ const todo = computed(() => {
     return store.getTodoById(String(route.params.id));
 });
 
-const editingText = ref(todo.value?.item ?? '');
+const editingText = ref('');
+
+watch(todo,(task) => {
+        if (task === undefined) {
+            return;
+        }
+
+        editingText.value = task.item;
+    },
+    { immediate: true },
+);
 
 const save = () => {
     const newItem = editingText.value.trim();

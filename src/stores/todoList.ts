@@ -1,19 +1,34 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { Todo } from '@/types/customTypes';
+import type { ApiTodo, Todo } from '@/types/customTypes';
 
-import dummyData from '@/data/dummydata.json';
+const API_URL = 'https://jsonplaceholder.typicode.com/todos?_limit=20';
 
 export const useTodoListStore = defineStore('todoList', () => {
-    const todoList = ref<Todo[]>(
-        dummyData.map((todo) => ({
-            ...todo,
-            id: String(todo.id),
-            createdAt: new Date(todo.createdAt),
-            updatedAt: new Date(todo.updatedAt),
-        })),
-    );
+    const todoList = ref<Todo[]>([]);
+    const isLoading = ref(false);
+
+    const fetchTodos = async () => {
+        isLoading.value = true;
+
+        try {
+            const response = await fetch(API_URL);
+            const data: ApiTodo[] = await response.json();
+
+            todoList.value = data.map((todo) => ({
+                id: String(todo.id),
+                item: todo.title,
+                completed: todo.completed,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+
+        isLoading.value = false;
+    };
 
     const searchQuery = ref('');
 
@@ -65,8 +80,10 @@ export const useTodoListStore = defineStore('todoList', () => {
 
     return {
         todoList,
+        isLoading,
         searchQuery,
         filteredTodoList,
+        fetchTodos,
         getTodoById,
         addTodo,
         toggleCompleted,

@@ -5,7 +5,14 @@
         </h1>
 
         <p
-            v-if="todo === undefined"
+            v-if="store.isLoading"
+            class="text-center text-muted-foreground text-sm py-8"
+        >
+            Loading…
+        </p>
+
+        <p
+            v-else-if="todo === undefined"
             class="text-center text-muted-foreground text-sm py-8"
         >
             Task not found.
